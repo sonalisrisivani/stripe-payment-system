@@ -1,0 +1,8 @@
+# Ignore build artifacts
+target/
+*.class
+
+# Ignore IDE settings
+.classpath
+.project
+.settings/
