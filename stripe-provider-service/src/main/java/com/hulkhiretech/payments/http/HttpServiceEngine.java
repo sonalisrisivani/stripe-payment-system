@@ -33,7 +33,7 @@ public class HttpServiceEngine {
 */
 	
 	
-	public String makeHttpCall() 
+	public ResponseEntity<String> makeHttpCall() 
 	{
 		log.info("\ninvoked makeHttpCall| restClient: "+restClient);
 		
@@ -73,6 +73,7 @@ public class HttpServiceEngine {
 			.toEntity(String.class);
 			
 		log.info("\n response: \n"+response.getBody());
-		return "httpserviceEngine";
+		
+		return response;
 	}
 }

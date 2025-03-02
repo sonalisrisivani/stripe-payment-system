@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hulkhiretech.payments.dto.CreatePaymentDTO;
+import com.hulkhiretech.payments.dto.PaymentDTO;
 import com.hulkhiretech.payments.pojo.CreatePaymentReq;
+import com.hulkhiretech.payments.pojo.PaymentRes;
 import com.hulkhiretech.payments.service.interfaces.PaymentService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +38,7 @@ public class PaymentController {
 
 
 	@PostMapping
-    public ResponseEntity<String> createPayment(@RequestBody CreatePaymentReq createPaymentReq) {
+    public ResponseEntity<PaymentRes> createPayment(@RequestBody CreatePaymentReq createPaymentReq) {
         log.info("\n invoked createPayment||createPaymentReq: "+createPaymentReq);
         
         
@@ -44,12 +46,17 @@ public class PaymentController {
         
         log.info("\n Converted to DTO payment DTO: "+paymentDTO);
         
-        String response = paymentService.createPayment(paymentDTO);
+        PaymentDTO response = paymentService.createPayment(paymentDTO);
         
         //ResponseEntity responseEntity = new ResponseEntity("Payment Created Successfully" +response, HttpStatus.CREATED);
        // ResponseEntity.ok().body(response);
         
-        return new ResponseEntity<>("Payment Created Successfully" +response, HttpStatus.CREATED);
+        PaymentRes paymentRes = modelMapper.map(response, PaymentRes.class);
+        
+        log.info("\n returnnig response payments: "+paymentRes);
+        
+        //return new ResponseEntity<>("Payment Created Successfully" +response, HttpStatus.CREATED);
+        return new ResponseEntity<>(paymentRes, HttpStatus.CREATED);
 
     }
     
