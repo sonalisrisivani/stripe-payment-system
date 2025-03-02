@@ -21,6 +21,7 @@
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 	</properties>
 
+
 	<profiles>
 		<profile>
 			<id>local</id>
