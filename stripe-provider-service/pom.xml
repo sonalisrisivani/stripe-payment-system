@@ -30,7 +30,8 @@
 			<properties>
 				<spring.profiles.active>local</spring.profiles.active>
 				<log4j2.path>
-					D:\\ctws\\feb25ct\\logs\\stripe-provider-service</log4j2.path>
+					E:\springboot\sc\stripe-payment-system\stripe-provider-service
+				</log4j2.path>
 			</properties>
 		</profile>
 		<profile>
@@ -101,6 +102,20 @@
 		    <artifactId>modelmapper</artifactId>
 		    <version>3.2.1</version>
 		</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+		<dependency>
+		    <groupId>org.springdoc</groupId>
+		    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		    <version>2.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+
 
 	</dependencies>
 
