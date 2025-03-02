@@ -1,3 +1,4 @@
+/*
 package com.hulkhiretech.payments.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@RequestMapping("/v11/payments")
+@RequestMapping("/v11/payment")
 public class PaymentControllerDemo {
 
 	
@@ -120,3 +121,6 @@ public class PaymentControllerDemo {
 	
 	
 }
+
+
+*/
