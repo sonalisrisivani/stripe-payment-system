@@ -1,6 +1,8 @@
 package com.hulkhiretech.payments.controller;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,7 @@ public class PaymentController {
 
 
 	@PostMapping
-    public String createPayment(@RequestBody CreatePaymentReq createPaymentReq) {
+    public ResponseEntity<String> createPayment(@RequestBody CreatePaymentReq createPaymentReq) {
         log.info("\n invoked createPayment||createPaymentReq: "+createPaymentReq);
         
         
@@ -43,7 +45,12 @@ public class PaymentController {
         log.info("\n Converted to DTO payment DTO: "+paymentDTO);
         
         String response = paymentService.createPayment(paymentDTO);
-        return "Payment Created Successfully"+response;
+        
+        //ResponseEntity responseEntity = new ResponseEntity("Payment Created Successfully" +response, HttpStatus.CREATED);
+       // ResponseEntity.ok().body(response);
+        
+        return new ResponseEntity<>("Payment Created Successfully" +response, HttpStatus.CREATED);
+
     }
     
     
