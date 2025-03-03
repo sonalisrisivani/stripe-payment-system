@@ -33,22 +33,18 @@ public class HttpServiceEngine {
 */
 	
 	
-	public ResponseEntity<String> makeHttpCall() 
+	public ResponseEntity<String> makeHttpCall(HttpRequest httpRequest) 
 	{
 		log.info("\ninvoked makeHttpCall| restClient: "+restClient);
 		
+		
+		
+		/*
 		HttpHeaders httpHeaders= new HttpHeaders();
 		httpHeaders.setBasicAuth("sk_test_tR3PYbcVNZZ796tH88S4VQ2u","");  //3. Header
 		httpHeaders.add("Content-Type", "application/x-www-form-urlencoded"); //4. Header
 		
-		/*
-		 MyClass implements Consumer<HttpHeaders> {
 	
-		void accept(HttpHeaders headers) {
-			safdasfas
-		} 
-		}
-		*/
 		
 		//Object requestBody = null;
 		MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
@@ -63,7 +59,20 @@ public class HttpServiceEngine {
 		requestBody.add("line_items[0][price_data][product_data][name]", "Sample Product");
 
 		
+		HttpRequest httpRequest = HttpRequest.builder()
+				.method(HttpMethod.POST)
+				.url("https://api.stripe.com/v1/checkout/sessions")
+				.headers(httpHeaders)
+				.requestBody(requestBody)
+				.build();
 		
+		
+		*/
+		
+		
+		
+		
+		/*
 		//5. Body - urlencoded
 		ResponseEntity<String> response = restClient.method(HttpMethod.POST)
 			.uri("https://api.stripe.com/v1/checkout/sessions")
@@ -71,7 +80,18 @@ public class HttpServiceEngine {
 			.body(requestBody)
 			.retrieve()
 			.toEntity(String.class);
+		*/
 			
+		
+		
+		ResponseEntity<String> response = restClient.method(httpRequest.getMethod())
+				.uri(httpRequest.getUrl())
+				.headers(headers ->	headers.addAll(httpRequest.getHeaders()))
+				.body(httpRequest.getRequestBody())
+				.retrieve()
+				.toEntity(String.class);
+		
+		
 		log.info("\n response: \n"+response.getBody());
 		
 		return response;
