@@ -1,5 +1,8 @@
 package com.hulkhiretech.payments.pojo;
 
+import lombok.Data;
+
+@Data
 public class LineItem {
 
 	private int quantity;

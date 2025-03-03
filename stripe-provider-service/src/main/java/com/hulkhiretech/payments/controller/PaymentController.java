@@ -16,63 +16,79 @@ import com.hulkhiretech.payments.pojo.CreatePaymentReq;
 import com.hulkhiretech.payments.pojo.PaymentRes;
 import com.hulkhiretech.payments.service.interfaces.PaymentService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/v1/payments")
 @Slf4j
+@RequiredArgsConstructor
 public class PaymentController {
 
-	
-	private PaymentService paymentService;
-	//seelct and click - alt+shift+s and geenrate constructor with fields
-	
-	private ModelMapper modelMapper;
-	
-    public PaymentController(PaymentService paymentService, ModelMapper modelMapper) {
-	    	
-		this.paymentService = paymentService;
-		this.modelMapper = modelMapper;
+	private final PaymentService paymentService;
+
+	private final ModelMapper modelMapper;
+
+	/**
+	 * Endpoint: http://localhost:8083/v1/payments
+	 * Sample Request Body:
+	 * 
+	  {
+		  "successUrl": "https://example.com/success",
+		  "cancelUrl": "https://example.com/cancel",
+		  "lineItems": [
+		    {
+		      "quantity": 5,
+		      "currency": "EUR",
+		      "productName": "Mechanical Keyboard",
+		      "unitAmount": 1000
+		    }
+		  ]
+		}
+
+	 * @param createPaymentReq
+	 * @return
+	 */
+	@PostMapping
+	public ResponseEntity<PaymentRes> createPayment(@RequestBody CreatePaymentReq createPaymentReq) {
+		log.info("invoked createPayment||createPaymentReq:" + createPaymentReq);
+
+		CreatePaymentDTO paymentDTO = modelMapper.map(createPaymentReq, CreatePaymentDTO.class);
+
+		log.info("Converted to DTO paymentDTO:" + paymentDTO);
+
+		PaymentDTO response = paymentService.createPayment(paymentDTO);
+
+		PaymentRes paymentRes = modelMapper.map(response, PaymentRes.class);
+
+		log.info("returning paymentRes:" + paymentRes);
+		return new ResponseEntity<>(paymentRes, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<PaymentRes> getPayment(@PathVariable String id)  {
+		log.info("invoked getPayment|| id:" + id);
+
+		// to receive & convert to dto & pass DTO to service - THIs is NOT APPLICABLE.
+		// NOT APPLICABLE
+
+		// call the service
+		PaymentDTO response = paymentService.getPayment(id);
+
+		PaymentRes paymentRes = modelMapper.map(response, PaymentRes.class);
+
+		log.info("returning paymentRes:" + paymentRes);
+		return new ResponseEntity<>(paymentRes, HttpStatus.OK);
+	}
+
+	//TODO complete the expire payment logic
+	@PostMapping("/{id}/expire")
+	public String expirePayment(@PathVariable String id)  {
+		log.info("invoked expirePayment|| id:" + id);
+
+		return "Payment expired||" + id;
 	}
 
 
 
-	@PostMapping
-    public ResponseEntity<PaymentRes> createPayment(@RequestBody CreatePaymentReq createPaymentReq) {
-        log.info("\n invoked createPayment||createPaymentReq: "+createPaymentReq);
-        
-        
-        CreatePaymentDTO paymentDTO = modelMapper.map(createPaymentReq, CreatePaymentDTO.class);
-        
-        log.info("\n Converted to DTO payment DTO: "+paymentDTO);
-        
-        PaymentDTO response = paymentService.createPayment(paymentDTO);
-        
-        //ResponseEntity responseEntity = new ResponseEntity("Payment Created Successfully" +response, HttpStatus.CREATED);
-       // ResponseEntity.ok().body(response);
-        
-        PaymentRes paymentRes = modelMapper.map(response, PaymentRes.class);
-        
-        log.info("\n returnnig response payments: "+paymentRes);
-        
-        //return new ResponseEntity<>("Payment Created Successfully" +response, HttpStatus.CREATED);
-        return new ResponseEntity<>(paymentRes, HttpStatus.CREATED);
-
-    }
-    
-    
-    @GetMapping("/{id}")
-    public String getPayment(@PathVariable String id)
-    {
-    	log.info("\n invoked getpayment"+ id);
-    	return "Payment fetched";
-    } 
-    
-    
-    @PostMapping("/{id}/expire")
-    public String expirePayment(@PathVariable String id) {
-        log.info("\n invoked expirePayment for id: " + id);
-        return "Payment expired Successfully";
-    }
-
-}   
+}

@@ -1,18 +1,18 @@
 package com.hulkhiretech.payments.controller;
 
 
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
 import com.stripe.Stripe;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.stripe.param.checkout.SessionExpireParams;
-
-import lombok.extern.slf4j.Slf4j;
 
 
 @RestController
@@ -29,7 +29,7 @@ public class PaymentControllerDemo3 {
 	{
 		
 		
-		Stripe.apiKey = "sk_test_tR3PYbcVNZZ796tH88S4VQ2u";
+		Stripe.apiKey = "sk_test_51QqzH1Glj8Fd7cTPfdZrTl0XFMCSWJKq0na8xXUlg31lzTAfhRCl7faTNGkNuEGb7jNVlLqAetD0wiiXapZjaYIV00s61NKnwk";
 		
 		try
 		{

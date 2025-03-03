@@ -9,4 +9,5 @@ public class PaymentDTO {
 	private String url;
 	private String status;
 	private String payment_status;
+	
 }
