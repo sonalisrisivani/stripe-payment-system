@@ -1,0 +1,3 @@
+[submodule "stripe-payment-processing-system"]
+	path = stripe-payment-processing-system
+	url = https://github.com/sonalisrisivani/stripe-payment-processing-system
